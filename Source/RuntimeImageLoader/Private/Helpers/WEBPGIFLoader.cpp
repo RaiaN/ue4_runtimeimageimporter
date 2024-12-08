@@ -51,6 +51,11 @@ const FColor* FWEBPGIFLoader::GetNextFrame(int32 FrameIndex)
     }
 }
 
+const float FWEBPGIFLoader::GetNextFrameDelay(int32 FrameIndex)
+{
+    return Timestamps[FrameIndex];
+}
+
 
 bool FWEBPGIFLoader::DecodeGIF(TArray<uint8>&& GifBytes)
 {
@@ -121,6 +126,7 @@ bool FWEBPGIFLoader::DecodeGIF(TArray<uint8>&& GifBytes)
                     SetError("Failed to decode .webp frame. Please check input data is valid!");
                     return false;
                 }
+                Timestamps.Add(timestamp / 1000.f);
                
                 FPlatformMemory::Memcpy((uint8_t*)TextureData.GetData() + FrameInd * FrameBytes, DecodedData, FrameBytes);
                 ++FrameInd;
@@ -134,7 +140,7 @@ bool FWEBPGIFLoader::DecodeGIF(TArray<uint8>&& GifBytes)
 
         return true;
     }
-
+    Timestamps.Add(100.f);
     TotalFrameCount = 1;
 
     TextureData.SetNumZeroed(GetWidth() * GetHeight());

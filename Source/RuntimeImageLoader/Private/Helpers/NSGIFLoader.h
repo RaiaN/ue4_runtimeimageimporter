@@ -29,6 +29,7 @@ public: /** Gif Data Method */
 
 public: /** Get Next Frame Texture Data*/
     const FColor* GetNextFrame(int32 FrameIndex) override;
+	const float GetNextFrameDelay(int32 FrameIndex) override;
 	bool DecodeGIF(TArray<uint8>&& GifBytes) override;
 
 protected: /** Bitmap Callbacks Methods */
@@ -44,6 +45,7 @@ private: /** Gif Data*/
 	nsgif_t* Gif;
 	const nsgif_info_t* Info;
 	TArray<FColor> TextureData;
+	TArray<float> Timestamps;
 
 	int32 Width = -1;
 	int32 Height = -1;

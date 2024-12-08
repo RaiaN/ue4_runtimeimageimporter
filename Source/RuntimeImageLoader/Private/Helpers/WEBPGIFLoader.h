@@ -29,7 +29,8 @@ public: /** Gif Data Method */
 
 public: /** Get Next Frame Texture Data*/
     const FColor* GetNextFrame(int32 FrameIndex) override;
-    bool DecodeGIF(TArray<uint8>&& GifBytes) override;
+	const float GetNextFrameDelay(int32 FrameIndex);
+	bool DecodeGIF(TArray<uint8>&& GifBytes) override;
 
 	static bool HasValidWebpHeader(const TArray<uint8>& GifBytes);
 
@@ -38,6 +39,7 @@ private:
 
 private:
 	TArray<FColor> TextureData;
+	TArray<float> Timestamps;
 
 	int32 Width = -1;
 	int32 Height = -1;

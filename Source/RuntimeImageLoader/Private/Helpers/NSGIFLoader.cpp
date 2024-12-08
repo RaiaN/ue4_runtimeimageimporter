@@ -134,6 +134,8 @@ bool FNSGIFLoader::DecodeInternal(nsgif_t* gif, bool first)
 			return false;
 		}
 
+		Timestamps.Add(delay_cs * 10.f / 1000.f);
+
 		if (frame_new < frame_prev) {
 			// Must be an animation that loops. We only care about
 			// decoding each frame once in this utility.
@@ -196,5 +198,10 @@ const FColor* FNSGIFLoader::GetNextFrame(int32 FrameIndex)
 		// Handling the case where the index is out of bounds
 		return &FColor::Black; // return a default FColor value, like FColor::Black
 	}
+}
+
+const float FNSGIFLoader::GetNextFrameDelay(int32 FrameIndex)
+{
+	return Timestamps[FrameIndex];
 }
 #endif //WITH_LIBNSGIF

@@ -37,7 +37,7 @@ void UAnimatedTexture2D::Tick(float DeltaTime)
 	if (!Decoder) return;
 
 	FrameTime += DeltaTime * PlayRate;
-	if (FrameTime < DefaultFrameDelay)
+	if (FrameTime < Decoder->GetNextFrameDelay(CurrentFrame))
 		return;
 
 	FrameTime = 0;
